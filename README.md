@@ -3,6 +3,9 @@
 
 
 > 🎃 **Hacktoberfest Open Source Contribution**: Field Notes is an open-source project created for the **DEV Hacktoberfest "Touch Grass" challenge**. It demonstrates open-source AI at the core—running 100% offline and locally without cloud dependencies to encourage people to explore nature outdoors. Community contributions, new feature suggestions, and outdoor field tests are warmly welcomed!
+>
+> 🌐 **Live Demo URL**: **[https://pumps-sixth-plain-market.trycloudflare.com](https://pumps-sixth-plain-market.trycloudflare.com)** (Live HTTPS instance accessible on desktop & mobile)
+
 
 Field Notes is an offline-first birding companion built for the DEV Hacktoberfest **Touch Grass** challenge. It uses open-source AI locally to minimize screen time outdoors: record or upload a bird call, identify the species locally with BirdNET, let a local LLM write a brief field-journal entry, and log new sightings to your personal life list and weekly goal tracker.
 
@@ -67,6 +70,10 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
 Open your browser to:
 👉 **[http://localhost:8000](http://localhost:8000)**
+
+Or test immediately via the public live demo instance:
+👉 **[https://pumps-sixth-plain-market.trycloudflare.com](https://pumps-sixth-plain-market.trycloudflare.com)**
+
 
 ### Accessing from a Phone on the Same Wi-Fi
 To use Field Notes outdoors or in your garden on your mobile phone:
