@@ -1,0 +1,851 @@
+{
+  "timestamp": "2026-10-09T22:30:10.011140",
+  "system": {
+    "cpu": "AMD Ryzen 5 5600H with Radeon Graphics",
+    "ram": "5.9 GB",
+    "os": "Windows 10",
+    "birdnet_version": "1.1.1",
+    "ollama_model": "llama3.2:3b",
+    "confidence_threshold": 0.5
+  },
+  "metrics": {
+    "total_clips": 28,
+    "overall_accuracy_pct": 14.3,
+    "top1_accuracy_pct": 14.3,
+    "condition_accuracy_pct": {
+      "clean": 14.3,
+      "noisy": 14.3,
+      "quiet": 14.3,
+      "short": 14.3
+    },
+    "avg_false_positives": 0.86,
+    "avg_runtime_s": 8.85,
+    "total_benchmark_s": 248.1,
+    "journal_tested": 3,
+    "journal_hallucinations": 0
+  },
+  "results": [
+    {
+      "date": "2026-10-09",
+      "file": "acridotheres_tristis_xc755392.wav",
+      "condition": "clean",
+      "expected_common": "Common Myna",
+      "expected_scientific": "Acridotheres tristis",
+      "duration_s": 15.0,
+      "runtime_s": 8.93,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Brown Tinamou",
+      "top_confidence": 0.8,
+      "all_detected": [
+        "Brown Tinamou (0.80)"
+      ],
+      "false_positives": [
+        "Brown Tinamou"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Brown Tinamou",
+          "scientific_name": "Crypturellus obsoletus",
+          "confidence": 0.8035375475883484,
+          "start_s": 6.0,
+          "end_s": 9.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "passer_domesticus_xc812403.wav",
+      "condition": "clean",
+      "expected_common": "House Sparrow",
+      "expected_scientific": "Passer domesticus",
+      "duration_s": 15.0,
+      "runtime_s": 9.03,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Common Chaffinch",
+      "top_confidence": 0.98,
+      "all_detected": [
+        "Common Chaffinch (0.98)",
+        "Collared Flycatcher (0.88)"
+      ],
+      "false_positives": [
+        "Common Chaffinch",
+        "Collared Flycatcher"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Common Chaffinch",
+          "scientific_name": "Fringilla coelebs",
+          "confidence": 0.9841453433036804,
+          "start_s": 0.0,
+          "end_s": 3.0
+        },
+        {
+          "common_name": "Collared Flycatcher",
+          "scientific_name": "Ficedula albicollis",
+          "confidence": 0.8775452971458435,
+          "start_s": 9.0,
+          "end_s": 12.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "pycnonotus_cafer_xc821550.wav",
+      "condition": "clean",
+      "expected_common": "Red-vented Bulbul",
+      "expected_scientific": "Pycnonotus cafer",
+      "duration_s": 15.0,
+      "runtime_s": 8.42,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Short-tailed Pygmy-Tyrant",
+      "top_confidence": 0.7,
+      "all_detected": [
+        "Short-tailed Pygmy-Tyrant (0.70)"
+      ],
+      "false_positives": [
+        "Short-tailed Pygmy-Tyrant"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Short-tailed Pygmy-Tyrant",
+          "scientific_name": "Myiornis ecaudatus",
+          "confidence": 0.7047409415245056,
+          "start_s": 0.0,
+          "end_s": 3.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "copsychus_saularis_xc748920.wav",
+      "condition": "clean",
+      "expected_common": "Oriental Magpie-Robin",
+      "expected_scientific": "Copsychus saularis",
+      "duration_s": 15.0,
+      "runtime_s": 8.23,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Yellow-throated Honeyeater",
+      "top_confidence": 0.65,
+      "all_detected": [
+        "Yellow-throated Honeyeater (0.65)"
+      ],
+      "false_positives": [
+        "Yellow-throated Honeyeater"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Yellow-throated Honeyeater",
+          "scientific_name": "Nesoptilotis flavicollis",
+          "confidence": 0.6455757021903992,
+          "start_s": 3.0,
+          "end_s": 6.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "eudynamys_scolopaceus_xc324988.wav",
+      "condition": "clean",
+      "expected_common": "Asian Koel",
+      "expected_scientific": "Eudynamys scolopaceus",
+      "duration_s": 15.0,
+      "runtime_s": 8.39,
+      "status": "ok",
+      "correct": "Y",
+      "top1_match": true,
+      "top_species": "Asian Koel",
+      "top_confidence": 1.0,
+      "all_detected": [
+        "Asian Koel (1.00)"
+      ],
+      "false_positives": [],
+      "detections_raw": [
+        {
+          "common_name": "Asian Koel",
+          "scientific_name": "Eudynamys scolopaceus",
+          "confidence": 0.999208390712738,
+          "start_s": 0.0,
+          "end_s": 3.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "hirundo_rustica_xc700000.wav",
+      "condition": "clean",
+      "expected_common": "Barn Swallow",
+      "expected_scientific": "Hirundo rustica",
+      "duration_s": 15.0,
+      "runtime_s": 8.53,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Tawny Owl",
+      "top_confidence": 0.66,
+      "all_detected": [
+        "Tawny Owl (0.66)"
+      ],
+      "false_positives": [
+        "Tawny Owl"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Tawny Owl",
+          "scientific_name": "Strix aluco",
+          "confidence": 0.6602352261543274,
+          "start_s": 0.0,
+          "end_s": 3.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "poecile_atricapillus_xc800000.wav",
+      "condition": "clean",
+      "expected_common": "Black-capped Chickadee",
+      "expected_scientific": "Poecile atricapillus",
+      "duration_s": 3.67,
+      "runtime_s": 8.6,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Mediterranean Gull",
+      "top_confidence": 0.99,
+      "all_detected": [
+        "Mediterranean Gull (0.99)"
+      ],
+      "false_positives": [
+        "Mediterranean Gull"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Mediterranean Gull",
+          "scientific_name": "Ichthyaetus melanocephalus",
+          "confidence": 0.9936110377311707,
+          "start_s": 0.0,
+          "end_s": 3.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "acridotheres_tristis_xc755392_noisy.wav",
+      "condition": "noisy",
+      "expected_common": "Common Myna",
+      "expected_scientific": "Acridotheres tristis",
+      "duration_s": 15.0,
+      "runtime_s": 10.81,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Brown Tinamou",
+      "top_confidence": 0.85,
+      "all_detected": [
+        "Brown Tinamou (0.85)"
+      ],
+      "false_positives": [
+        "Brown Tinamou"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Brown Tinamou",
+          "scientific_name": "Crypturellus obsoletus",
+          "confidence": 0.854099452495575,
+          "start_s": 6.0,
+          "end_s": 9.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "acridotheres_tristis_xc755392_quiet.wav",
+      "condition": "quiet",
+      "expected_common": "Common Myna",
+      "expected_scientific": "Acridotheres tristis",
+      "duration_s": 15.0,
+      "runtime_s": 8.65,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Brown Tinamou",
+      "top_confidence": 0.81,
+      "all_detected": [
+        "Brown Tinamou (0.81)"
+      ],
+      "false_positives": [
+        "Brown Tinamou"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Brown Tinamou",
+          "scientific_name": "Crypturellus obsoletus",
+          "confidence": 0.8074453473091125,
+          "start_s": 6.0,
+          "end_s": 9.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "acridotheres_tristis_xc755392_short.wav",
+      "condition": "short",
+      "expected_common": "Common Myna",
+      "expected_scientific": "Acridotheres tristis",
+      "duration_s": 5.0,
+      "runtime_s": 8.8,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "None",
+      "top_confidence": 0.0,
+      "all_detected": [],
+      "false_positives": [],
+      "detections_raw": []
+    },
+    {
+      "date": "2026-10-09",
+      "file": "passer_domesticus_xc812403_noisy.wav",
+      "condition": "noisy",
+      "expected_common": "House Sparrow",
+      "expected_scientific": "Passer domesticus",
+      "duration_s": 15.0,
+      "runtime_s": 8.95,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Common Chaffinch",
+      "top_confidence": 0.51,
+      "all_detected": [
+        "Common Chaffinch (0.51)"
+      ],
+      "false_positives": [
+        "Common Chaffinch"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Common Chaffinch",
+          "scientific_name": "Fringilla coelebs",
+          "confidence": 0.5103987455368042,
+          "start_s": 0.0,
+          "end_s": 3.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "passer_domesticus_xc812403_quiet.wav",
+      "condition": "quiet",
+      "expected_common": "House Sparrow",
+      "expected_scientific": "Passer domesticus",
+      "duration_s": 15.0,
+      "runtime_s": 10.4,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Common Chaffinch",
+      "top_confidence": 0.98,
+      "all_detected": [
+        "Common Chaffinch (0.98)",
+        "Collared Flycatcher (0.88)"
+      ],
+      "false_positives": [
+        "Common Chaffinch",
+        "Collared Flycatcher"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Common Chaffinch",
+          "scientific_name": "Fringilla coelebs",
+          "confidence": 0.980465292930603,
+          "start_s": 0.0,
+          "end_s": 3.0
+        },
+        {
+          "common_name": "Collared Flycatcher",
+          "scientific_name": "Ficedula albicollis",
+          "confidence": 0.875720202922821,
+          "start_s": 9.0,
+          "end_s": 12.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "passer_domesticus_xc812403_short.wav",
+      "condition": "short",
+      "expected_common": "House Sparrow",
+      "expected_scientific": "Passer domesticus",
+      "duration_s": 5.0,
+      "runtime_s": 9.33,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Collared Flycatcher",
+      "top_confidence": 0.58,
+      "all_detected": [
+        "Collared Flycatcher (0.58)"
+      ],
+      "false_positives": [
+        "Collared Flycatcher"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Collared Flycatcher",
+          "scientific_name": "Ficedula albicollis",
+          "confidence": 0.5759343504905701,
+          "start_s": 3.0,
+          "end_s": 5.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "pycnonotus_cafer_xc821550_noisy.wav",
+      "condition": "noisy",
+      "expected_common": "Red-vented Bulbul",
+      "expected_scientific": "Pycnonotus cafer",
+      "duration_s": 15.0,
+      "runtime_s": 8.85,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Short-tailed Pygmy-Tyrant",
+      "top_confidence": 0.71,
+      "all_detected": [
+        "Short-tailed Pygmy-Tyrant (0.71)"
+      ],
+      "false_positives": [
+        "Short-tailed Pygmy-Tyrant"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Short-tailed Pygmy-Tyrant",
+          "scientific_name": "Myiornis ecaudatus",
+          "confidence": 0.7135769128799438,
+          "start_s": 6.0,
+          "end_s": 9.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "pycnonotus_cafer_xc821550_quiet.wav",
+      "condition": "quiet",
+      "expected_common": "Red-vented Bulbul",
+      "expected_scientific": "Pycnonotus cafer",
+      "duration_s": 15.0,
+      "runtime_s": 9.22,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Short-tailed Pygmy-Tyrant",
+      "top_confidence": 0.71,
+      "all_detected": [
+        "Short-tailed Pygmy-Tyrant (0.71)"
+      ],
+      "false_positives": [
+        "Short-tailed Pygmy-Tyrant"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Short-tailed Pygmy-Tyrant",
+          "scientific_name": "Myiornis ecaudatus",
+          "confidence": 0.7052968740463257,
+          "start_s": 0.0,
+          "end_s": 3.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "pycnonotus_cafer_xc821550_short.wav",
+      "condition": "short",
+      "expected_common": "Red-vented Bulbul",
+      "expected_scientific": "Pycnonotus cafer",
+      "duration_s": 5.0,
+      "runtime_s": 7.95,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Short-tailed Pygmy-Tyrant",
+      "top_confidence": 0.71,
+      "all_detected": [
+        "Short-tailed Pygmy-Tyrant (0.71)"
+      ],
+      "false_positives": [
+        "Short-tailed Pygmy-Tyrant"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Short-tailed Pygmy-Tyrant",
+          "scientific_name": "Myiornis ecaudatus",
+          "confidence": 0.7088813781738281,
+          "start_s": 3.0,
+          "end_s": 5.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "copsychus_saularis_xc748920_noisy.wav",
+      "condition": "noisy",
+      "expected_common": "Oriental Magpie-Robin",
+      "expected_scientific": "Copsychus saularis",
+      "duration_s": 15.0,
+      "runtime_s": 8.01,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Yellow-throated Honeyeater",
+      "top_confidence": 0.79,
+      "all_detected": [
+        "Yellow-throated Honeyeater (0.79)",
+        "European Golden-Plover (0.50)"
+      ],
+      "false_positives": [
+        "Yellow-throated Honeyeater",
+        "European Golden-Plover"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Yellow-throated Honeyeater",
+          "scientific_name": "Nesoptilotis flavicollis",
+          "confidence": 0.7868731617927551,
+          "start_s": 3.0,
+          "end_s": 6.0
+        },
+        {
+          "common_name": "European Golden-Plover",
+          "scientific_name": "Pluvialis apricaria",
+          "confidence": 0.5042348504066467,
+          "start_s": 6.0,
+          "end_s": 9.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "copsychus_saularis_xc748920_quiet.wav",
+      "condition": "quiet",
+      "expected_common": "Oriental Magpie-Robin",
+      "expected_scientific": "Copsychus saularis",
+      "duration_s": 15.0,
+      "runtime_s": 9.37,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Yellow-throated Honeyeater",
+      "top_confidence": 0.65,
+      "all_detected": [
+        "Yellow-throated Honeyeater (0.65)"
+      ],
+      "false_positives": [
+        "Yellow-throated Honeyeater"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Yellow-throated Honeyeater",
+          "scientific_name": "Nesoptilotis flavicollis",
+          "confidence": 0.6462077498435974,
+          "start_s": 3.0,
+          "end_s": 6.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "copsychus_saularis_xc748920_short.wav",
+      "condition": "short",
+      "expected_common": "Oriental Magpie-Robin",
+      "expected_scientific": "Copsychus saularis",
+      "duration_s": 5.0,
+      "runtime_s": 8.6,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Yellow-throated Honeyeater",
+      "top_confidence": 0.63,
+      "all_detected": [
+        "Yellow-throated Honeyeater (0.63)"
+      ],
+      "false_positives": [
+        "Yellow-throated Honeyeater"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Yellow-throated Honeyeater",
+          "scientific_name": "Nesoptilotis flavicollis",
+          "confidence": 0.6325116157531738,
+          "start_s": 0.0,
+          "end_s": 3.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "eudynamys_scolopaceus_xc324988_noisy.wav",
+      "condition": "noisy",
+      "expected_common": "Asian Koel",
+      "expected_scientific": "Eudynamys scolopaceus",
+      "duration_s": 15.0,
+      "runtime_s": 8.35,
+      "status": "ok",
+      "correct": "Y",
+      "top1_match": true,
+      "top_species": "Asian Koel",
+      "top_confidence": 1.0,
+      "all_detected": [
+        "Asian Koel (1.00)"
+      ],
+      "false_positives": [],
+      "detections_raw": [
+        {
+          "common_name": "Asian Koel",
+          "scientific_name": "Eudynamys scolopaceus",
+          "confidence": 0.9987510442733765,
+          "start_s": 0.0,
+          "end_s": 3.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "eudynamys_scolopaceus_xc324988_quiet.wav",
+      "condition": "quiet",
+      "expected_common": "Asian Koel",
+      "expected_scientific": "Eudynamys scolopaceus",
+      "duration_s": 15.0,
+      "runtime_s": 7.93,
+      "status": "ok",
+      "correct": "Y",
+      "top1_match": true,
+      "top_species": "Asian Koel",
+      "top_confidence": 1.0,
+      "all_detected": [
+        "Asian Koel (1.00)"
+      ],
+      "false_positives": [],
+      "detections_raw": [
+        {
+          "common_name": "Asian Koel",
+          "scientific_name": "Eudynamys scolopaceus",
+          "confidence": 0.9992048144340515,
+          "start_s": 0.0,
+          "end_s": 3.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "eudynamys_scolopaceus_xc324988_short.wav",
+      "condition": "short",
+      "expected_common": "Asian Koel",
+      "expected_scientific": "Eudynamys scolopaceus",
+      "duration_s": 5.0,
+      "runtime_s": 9.4,
+      "status": "ok",
+      "correct": "Y",
+      "top1_match": true,
+      "top_species": "Asian Koel",
+      "top_confidence": 1.0,
+      "all_detected": [
+        "Asian Koel (1.00)"
+      ],
+      "false_positives": [],
+      "detections_raw": [
+        {
+          "common_name": "Asian Koel",
+          "scientific_name": "Eudynamys scolopaceus",
+          "confidence": 0.9976720213890076,
+          "start_s": 0.0,
+          "end_s": 3.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "hirundo_rustica_xc700000_noisy.wav",
+      "condition": "noisy",
+      "expected_common": "Barn Swallow",
+      "expected_scientific": "Hirundo rustica",
+      "duration_s": 15.0,
+      "runtime_s": 11.9,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "None",
+      "top_confidence": 0.0,
+      "all_detected": [],
+      "false_positives": [],
+      "detections_raw": []
+    },
+    {
+      "date": "2026-10-09",
+      "file": "hirundo_rustica_xc700000_quiet.wav",
+      "condition": "quiet",
+      "expected_common": "Barn Swallow",
+      "expected_scientific": "Hirundo rustica",
+      "duration_s": 15.0,
+      "runtime_s": 9.69,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Tawny Owl",
+      "top_confidence": 0.67,
+      "all_detected": [
+        "Tawny Owl (0.67)"
+      ],
+      "false_positives": [
+        "Tawny Owl"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Tawny Owl",
+          "scientific_name": "Strix aluco",
+          "confidence": 0.6651145219802856,
+          "start_s": 0.0,
+          "end_s": 3.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "hirundo_rustica_xc700000_short.wav",
+      "condition": "short",
+      "expected_common": "Barn Swallow",
+      "expected_scientific": "Hirundo rustica",
+      "duration_s": 5.0,
+      "runtime_s": 7.96,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "None",
+      "top_confidence": 0.0,
+      "all_detected": [],
+      "false_positives": [],
+      "detections_raw": []
+    },
+    {
+      "date": "2026-10-09",
+      "file": "poecile_atricapillus_xc800000_noisy.wav",
+      "condition": "noisy",
+      "expected_common": "Black-capped Chickadee",
+      "expected_scientific": "Poecile atricapillus",
+      "duration_s": 3.67,
+      "runtime_s": 7.83,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Mediterranean Gull",
+      "top_confidence": 0.99,
+      "all_detected": [
+        "Mediterranean Gull (0.99)"
+      ],
+      "false_positives": [
+        "Mediterranean Gull"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Mediterranean Gull",
+          "scientific_name": "Ichthyaetus melanocephalus",
+          "confidence": 0.9937816262245178,
+          "start_s": 0.0,
+          "end_s": 3.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "poecile_atricapillus_xc800000_quiet.wav",
+      "condition": "quiet",
+      "expected_common": "Black-capped Chickadee",
+      "expected_scientific": "Poecile atricapillus",
+      "duration_s": 3.67,
+      "runtime_s": 7.84,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Mediterranean Gull",
+      "top_confidence": 0.99,
+      "all_detected": [
+        "Mediterranean Gull (0.99)"
+      ],
+      "false_positives": [
+        "Mediterranean Gull"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Mediterranean Gull",
+          "scientific_name": "Ichthyaetus melanocephalus",
+          "confidence": 0.9936203360557556,
+          "start_s": 0.0,
+          "end_s": 3.0
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "file": "poecile_atricapillus_xc800000_short.wav",
+      "condition": "short",
+      "expected_common": "Black-capped Chickadee",
+      "expected_scientific": "Poecile atricapillus",
+      "duration_s": 3.67,
+      "runtime_s": 7.85,
+      "status": "ok",
+      "correct": "N",
+      "top1_match": false,
+      "top_species": "Mediterranean Gull",
+      "top_confidence": 0.99,
+      "all_detected": [
+        "Mediterranean Gull (0.99)"
+      ],
+      "false_positives": [
+        "Mediterranean Gull"
+      ],
+      "detections_raw": [
+        {
+          "common_name": "Mediterranean Gull",
+          "scientific_name": "Ichthyaetus melanocephalus",
+          "confidence": 0.9936110377311707,
+          "start_s": 0.0,
+          "end_s": 3.0
+        }
+      ]
+    }
+  ],
+  "journal_verification": [
+    {
+      "clip": "acridotheres_tristis_xc755392.wav",
+      "allowed_species": [
+        "Brown Tinamou"
+      ],
+      "hallucinations": [],
+      "text_snippet": "October 09, 2026 at 10:29 PM\n\nWe're at Benchmark Garden, and it's a magical night for birding! The Brown Tinamou (Crypturellus obsoletus) is our main attraction..."
+    },
+    {
+      "clip": "passer_domesticus_xc812403.wav",
+      "allowed_species": [
+        "Common Chaffinch",
+        "Collared Flycatcher"
+      ],
+      "hallucinations": [],
+      "text_snippet": "October 09, 2026 at 10:29 PM\n\nWe're delighted to have you in Benchmark Garden tonight! The moon is full, casting a silver glow over the landscape, and the birds..."
+    },
+    {
+      "clip": "pycnonotus_cafer_xc821550.wav",
+      "allowed_species": [
+        "Short-tailed Pygmy-Tyrant"
+      ],
+      "hallucinations": [],
+      "text_snippet": "What a magical night for birding! Here's my field journal entry for October 09, 2026 at 10:29 PM:\n\n**Observation Details:**\n\n* Date/Time: October 09, 2026 at 10..."
+    }
+  ]
+}

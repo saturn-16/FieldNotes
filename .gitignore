@@ -19,3 +19,7 @@ htmlcov/
 Thumbs.db
 .vscode/
 .idea/
+
+# Large audio clips (> 2 MB)
+samples/*.mp3
+samples/*_large.*

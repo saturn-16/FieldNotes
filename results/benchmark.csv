@@ -1,0 +1,29 @@
+date,file,condition,expected_common,expected_scientific,duration_s,runtime_s,correct,top1_match,top_species,top_confidence,all_detected,false_positives
+2026-10-09,acridotheres_tristis_xc755392.wav,clean,Common Myna,Acridotheres tristis,15.0,8.93,N,False,Brown Tinamou,0.8,Brown Tinamou (0.80),Brown Tinamou
+2026-10-09,passer_domesticus_xc812403.wav,clean,House Sparrow,Passer domesticus,15.0,9.03,N,False,Common Chaffinch,0.98,Common Chaffinch (0.98); Collared Flycatcher (0.88),Common Chaffinch; Collared Flycatcher
+2026-10-09,pycnonotus_cafer_xc821550.wav,clean,Red-vented Bulbul,Pycnonotus cafer,15.0,8.42,N,False,Short-tailed Pygmy-Tyrant,0.7,Short-tailed Pygmy-Tyrant (0.70),Short-tailed Pygmy-Tyrant
+2026-10-09,copsychus_saularis_xc748920.wav,clean,Oriental Magpie-Robin,Copsychus saularis,15.0,8.23,N,False,Yellow-throated Honeyeater,0.65,Yellow-throated Honeyeater (0.65),Yellow-throated Honeyeater
+2026-10-09,eudynamys_scolopaceus_xc324988.wav,clean,Asian Koel,Eudynamys scolopaceus,15.0,8.39,Y,True,Asian Koel,1.0,Asian Koel (1.00),None
+2026-10-09,hirundo_rustica_xc700000.wav,clean,Barn Swallow,Hirundo rustica,15.0,8.53,N,False,Tawny Owl,0.66,Tawny Owl (0.66),Tawny Owl
+2026-10-09,poecile_atricapillus_xc800000.wav,clean,Black-capped Chickadee,Poecile atricapillus,3.67,8.6,N,False,Mediterranean Gull,0.99,Mediterranean Gull (0.99),Mediterranean Gull
+2026-10-09,acridotheres_tristis_xc755392_noisy.wav,noisy,Common Myna,Acridotheres tristis,15.0,10.81,N,False,Brown Tinamou,0.85,Brown Tinamou (0.85),Brown Tinamou
+2026-10-09,acridotheres_tristis_xc755392_quiet.wav,quiet,Common Myna,Acridotheres tristis,15.0,8.65,N,False,Brown Tinamou,0.81,Brown Tinamou (0.81),Brown Tinamou
+2026-10-09,acridotheres_tristis_xc755392_short.wav,short,Common Myna,Acridotheres tristis,5.0,8.8,N,False,None,0.0,None,None
+2026-10-09,passer_domesticus_xc812403_noisy.wav,noisy,House Sparrow,Passer domesticus,15.0,8.95,N,False,Common Chaffinch,0.51,Common Chaffinch (0.51),Common Chaffinch
+2026-10-09,passer_domesticus_xc812403_quiet.wav,quiet,House Sparrow,Passer domesticus,15.0,10.4,N,False,Common Chaffinch,0.98,Common Chaffinch (0.98); Collared Flycatcher (0.88),Common Chaffinch; Collared Flycatcher
+2026-10-09,passer_domesticus_xc812403_short.wav,short,House Sparrow,Passer domesticus,5.0,9.33,N,False,Collared Flycatcher,0.58,Collared Flycatcher (0.58),Collared Flycatcher
+2026-10-09,pycnonotus_cafer_xc821550_noisy.wav,noisy,Red-vented Bulbul,Pycnonotus cafer,15.0,8.85,N,False,Short-tailed Pygmy-Tyrant,0.71,Short-tailed Pygmy-Tyrant (0.71),Short-tailed Pygmy-Tyrant
+2026-10-09,pycnonotus_cafer_xc821550_quiet.wav,quiet,Red-vented Bulbul,Pycnonotus cafer,15.0,9.22,N,False,Short-tailed Pygmy-Tyrant,0.71,Short-tailed Pygmy-Tyrant (0.71),Short-tailed Pygmy-Tyrant
+2026-10-09,pycnonotus_cafer_xc821550_short.wav,short,Red-vented Bulbul,Pycnonotus cafer,5.0,7.95,N,False,Short-tailed Pygmy-Tyrant,0.71,Short-tailed Pygmy-Tyrant (0.71),Short-tailed Pygmy-Tyrant
+2026-10-09,copsychus_saularis_xc748920_noisy.wav,noisy,Oriental Magpie-Robin,Copsychus saularis,15.0,8.01,N,False,Yellow-throated Honeyeater,0.79,Yellow-throated Honeyeater (0.79); European Golden-Plover (0.50),Yellow-throated Honeyeater; European Golden-Plover
+2026-10-09,copsychus_saularis_xc748920_quiet.wav,quiet,Oriental Magpie-Robin,Copsychus saularis,15.0,9.37,N,False,Yellow-throated Honeyeater,0.65,Yellow-throated Honeyeater (0.65),Yellow-throated Honeyeater
+2026-10-09,copsychus_saularis_xc748920_short.wav,short,Oriental Magpie-Robin,Copsychus saularis,5.0,8.6,N,False,Yellow-throated Honeyeater,0.63,Yellow-throated Honeyeater (0.63),Yellow-throated Honeyeater
+2026-10-09,eudynamys_scolopaceus_xc324988_noisy.wav,noisy,Asian Koel,Eudynamys scolopaceus,15.0,8.35,Y,True,Asian Koel,1.0,Asian Koel (1.00),None
+2026-10-09,eudynamys_scolopaceus_xc324988_quiet.wav,quiet,Asian Koel,Eudynamys scolopaceus,15.0,7.93,Y,True,Asian Koel,1.0,Asian Koel (1.00),None
+2026-10-09,eudynamys_scolopaceus_xc324988_short.wav,short,Asian Koel,Eudynamys scolopaceus,5.0,9.4,Y,True,Asian Koel,1.0,Asian Koel (1.00),None
+2026-10-09,hirundo_rustica_xc700000_noisy.wav,noisy,Barn Swallow,Hirundo rustica,15.0,11.9,N,False,None,0.0,None,None
+2026-10-09,hirundo_rustica_xc700000_quiet.wav,quiet,Barn Swallow,Hirundo rustica,15.0,9.69,N,False,Tawny Owl,0.67,Tawny Owl (0.67),Tawny Owl
+2026-10-09,hirundo_rustica_xc700000_short.wav,short,Barn Swallow,Hirundo rustica,5.0,7.96,N,False,None,0.0,None,None
+2026-10-09,poecile_atricapillus_xc800000_noisy.wav,noisy,Black-capped Chickadee,Poecile atricapillus,3.67,7.83,N,False,Mediterranean Gull,0.99,Mediterranean Gull (0.99),Mediterranean Gull
+2026-10-09,poecile_atricapillus_xc800000_quiet.wav,quiet,Black-capped Chickadee,Poecile atricapillus,3.67,7.84,N,False,Mediterranean Gull,0.99,Mediterranean Gull (0.99),Mediterranean Gull
+2026-10-09,poecile_atricapillus_xc800000_short.wav,short,Black-capped Chickadee,Poecile atricapillus,3.67,7.85,N,False,Mediterranean Gull,0.99,Mediterranean Gull (0.99),Mediterranean Gull
