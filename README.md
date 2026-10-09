@@ -111,40 +111,9 @@ pytest -v
 
 ---
 
-## Screenshots Placeholder
+## Screenshots
 
-```
-+-------------------------------------------------------------------------+
-| [≡] 🌿 Field Notes                             [ Dusk Theme ]           |
-|                                                                         |
-|  +-------------------------------------------------------------------+  |
-|  | Field Notes                                     (\(\              |  |
-|  | Naturalist's companion                          ( -.-) ~ ☼        |  |
-|  | Listen locally, journal automatically.         o_(")(")           |  |
-|  +-------------------------------------------------------------------+  |
-|                                                                         |
-|  [ (( ◉ )) Tap to record bird call ]                                    |
-|  ~~~~~~~~~ Waveform Level Meter ~~~~~~~~~                               |
-|                                                                         |
-|  [ Identify Birds & Draft Journal ]                                     |
-|                                                                         |
-|  Detected Species:                                                      |
-|  +-------------------------------------------------------------------+  |
-|  | ★ NEW SIGHTING                                                    |  |
-|  | American Robin (Turdus migratorius)                        92%    |  |
-|  | Window: 0.0s – 3.0s                                               |  |
-|  +-------------------------------------------------------------------+  |
-|                                                                         |
-|  Field Journal Entry (Ruled Notebook):                                  |
-|  ---------------------------------------------------------------------  |
-|  A crisp morning in the hemlocks. The cheerful rising-and-falling       |
-|  song of an American Robin echoed through the damp morning air.         |
-|  ---------------------------------------------------------------------  |
-|  [ Copy Text ]  [ Export Markdown (.md) ]                               |
-|                                                                         |
-|  [ Today ]                 [ Life List ]             [ Weekly Goal ]    |
-+-------------------------------------------------------------------------+
-```
+![Field Notes Application Interface](docs/images/field_notes_ui.png)
 
 ---
 
