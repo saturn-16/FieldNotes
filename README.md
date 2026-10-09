@@ -1,4 +1,14 @@
+---
+title: Field Notes
+emoji: 🌿
+colorFrom: green
+colorTo: emerald
+sdk: docker
+app_port: 7860
+---
+
 # 🌿 Field Notes: Offline-First Birding Companion
+
 
 > 🎃 **Hacktoberfest Open Source Contribution**: Field Notes is an open-source project created for the **DEV Hacktoberfest "Touch Grass" challenge**. It demonstrates open-source AI at the core—running 100% offline and locally without cloud dependencies to encourage people to explore nature outdoors. Community contributions, new feature suggestions, and outdoor field tests are warmly welcomed!
 
