@@ -1,11 +1,3 @@
----
-title: Field Notes
-emoji: 🌿
-colorFrom: green
-colorTo: emerald
-sdk: docker
-app_port: 7860
----
 
 # 🌿 Field Notes: Offline-First Birding Companion
 
