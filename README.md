@@ -125,19 +125,6 @@ python scripts/benchmark.py
 
 ---
 
-## Outdoor Test Results
-
-Fill this table with your real-world field observation tests:
-
-> Filled manually after real outdoor walks.
-
-| Date | Location | Audio Clip / Duration | Species Detected | Correct (Y/N) | False Positives | Notes |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| | | | | | | |
-| | | | | | | |
-| | | | | | | |
-| | | | | | | |
-
 <!-- BENCHMARK:START -->
 ## Lab Benchmark Results (automated)
 
