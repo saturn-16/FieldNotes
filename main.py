@@ -93,6 +93,16 @@ def get_index():
     return FileResponse(str(index_file))
 
 
+@app.get("/favicon.ico", include_in_schema=False)
+def get_favicon():
+    """Serve the application favicon."""
+    favicon_file = STATIC_DIR / "favicon.svg"
+    if favicon_file.exists():
+        return FileResponse(str(favicon_file), media_type="image/svg+xml")
+    return Response(status_code=204)
+
+
+
 @app.get("/api/models")
 def get_models():
     """List locally available Ollama models."""
