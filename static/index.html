@@ -1,0 +1,2639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Field Notes — Offline-First Birding Companion</title>
+  <meta name="description" content="Offline-first birding companion: listen locally with BirdNET, journal with Ollama, track your life list.">
+  <style>
+    /* -------------------------------------------------------------
+       THEME VARIABLES & BRIGHT NATURALIST PALETTE
+       Aesthetic: Warm natural paper, vibrant forest green, lush moss,
+       bark brown, sunrise amber & morning sunlight.
+    ------------------------------------------------------------- */
+    :root {
+      --bg-base: #f6f3eb;
+      --bg-paper: #ffffff;
+      --bg-card: #fbf9f4;
+      --bg-card-hover: #ffffff;
+      --border-subtle: #ded8cb;
+      --border-strong: #c4baa7;
+      --border-stamp: #b8ac97;
+      --text-main: #1d211e;
+      --text-muted: #535c54;
+      --text-subtle: #79827a;
+      
+      /* Bright naturalist palette */
+      --forest-dark: #143825;
+      --forest-mid: #1e5c3a;
+      --forest-light: #e4f1e9;
+      --forest-accent: #2c754d;
+      --moss: #4e7a3b;
+      --moss-light: #eaf4e6;
+      --bark: #4a3828;
+      --sunrise: #d85c1f;
+      --sunrise-hover: #be4e17;
+      --sunrise-light: #fef0e7;
+      --sunrise-gold: #e59324;
+      --sunrise-gold-light: #fef8eb;
+      --journal-line: rgba(30, 92, 58, 0.12);
+      --journal-margin: rgba(216, 92, 31, 0.32);
+      
+      --shadow-sm: 0 2px 6px rgba(20, 56, 37, 0.06);
+      --shadow-md: 0 6px 18px rgba(20, 56, 37, 0.09);
+      --shadow-lg: 0 12px 32px rgba(20, 56, 37, 0.14);
+      --font-serif: "Iowan Old Style", "Palatino Linotype", "Palatino", Georgia, serif;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-full: 9999px;
+      --tap-min: 44px;
+    }
+
+    /* Dusk / Night Theme */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-base: #121614;
+        --bg-paper: #181d1a;
+        --bg-card: #202722;
+        --bg-card-hover: #262e29;
+        --border-subtle: #2d3830;
+        --border-strong: #415247;
+        --border-stamp: #4f6356;
+        --text-main: #edf2ed;
+        --text-muted: #abb5ac;
+        --text-subtle: #7d8a7f;
+        --forest-dark: #0d1e14;
+        --forest-mid: #387b55;
+        --forest-light: #1c3527;
+        --forest-accent: #49996d;
+        --moss: #6ea058;
+        --moss-light: #23351f;
+        --bark: #67513b;
+        --sunrise: #e86a2e;
+        --sunrise-hover: #f7783a;
+        --sunrise-light: #382218;
+        --sunrise-gold: #f2a73a;
+        --sunrise-gold-light: #352a1b;
+        --journal-line: rgba(110, 160, 88, 0.14);
+        --journal-margin: rgba(232, 106, 46, 0.3);
+        --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.4);
+        --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.5);
+        --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.65);
+      }
+    }
+
+    [data-theme="light"] {
+      --bg-base: #f6f3eb;
+      --bg-paper: #ffffff;
+      --bg-card: #fbf9f4;
+      --bg-card-hover: #ffffff;
+      --border-subtle: #ded8cb;
+      --border-strong: #c4baa7;
+      --border-stamp: #b8ac97;
+      --text-main: #1d211e;
+      --text-muted: #535c54;
+      --text-subtle: #79827a;
+      --forest-dark: #143825;
+      --forest-mid: #1e5c3a;
+      --forest-light: #e4f1e9;
+      --forest-accent: #2c754d;
+      --moss: #4e7a3b;
+      --moss-light: #eaf4e6;
+      --bark: #4a3828;
+      --sunrise: #d85c1f;
+      --sunrise-hover: #be4e17;
+      --sunrise-light: #fef0e7;
+      --sunrise-gold: #e59324;
+      --sunrise-gold-light: #fef8eb;
+      --journal-line: rgba(30, 92, 58, 0.12);
+      --journal-margin: rgba(216, 92, 31, 0.32);
+      --shadow-sm: 0 2px 6px rgba(20, 56, 37, 0.06);
+      --shadow-md: 0 6px 18px rgba(20, 56, 37, 0.09);
+      --shadow-lg: 0 12px 32px rgba(20, 56, 37, 0.14);
+    }
+
+    [data-theme="dark"] {
+      --bg-base: #121614;
+      --bg-paper: #181d1a;
+      --bg-card: #202722;
+      --bg-card-hover: #262e29;
+      --border-subtle: #2d3830;
+      --border-strong: #415247;
+      --border-stamp: #4f6356;
+      --text-main: #edf2ed;
+      --text-muted: #abb5ac;
+      --text-subtle: #7d8a7f;
+      --forest-dark: #0d1e14;
+      --forest-mid: #387b55;
+      --forest-light: #1c3527;
+      --forest-accent: #49996d;
+      --moss: #6ea058;
+      --moss-light: #23351f;
+      --bark: #67513b;
+      --sunrise: #e86a2e;
+      --sunrise-hover: #f7783a;
+      --sunrise-light: #382218;
+      --sunrise-gold: #f2a73a;
+      --sunrise-gold-light: #352a1b;
+      --journal-line: rgba(110, 160, 88, 0.14);
+      --journal-margin: rgba(232, 106, 46, 0.3);
+      --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.65);
+    }
+
+    /* -------------------------------------------------------------
+       BASE & RESET
+    ------------------------------------------------------------- */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background-image: 
+        radial-gradient(ellipse at top right, rgba(229, 147, 36, 0.08), transparent 50%),
+        radial-gradient(ellipse at bottom left, rgba(30, 92, 58, 0.08), transparent 60%);
+      background-attachment: fixed;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--sunrise);
+      outline-offset: 2px;
+    }
+
+    /* -------------------------------------------------------------
+       RESPONSIVE SHELL
+    ------------------------------------------------------------- */
+    .app-shell {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      max-width: 1220px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 860px) {
+      .app-shell {
+        flex-direction: row;
+      }
+    }
+
+    /* Navigation */
+    .nav-bar {
+      background: var(--bg-paper);
+      border-top: 1px solid var(--border-subtle);
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-around;
+      padding: 0.4rem 0.75rem env(safe-area-inset-bottom, 0.4rem);
+      box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    @media (min-width: 860px) {
+      .nav-bar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        width: 260px;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 1.5rem;
+        padding: 2.25rem 1.5rem;
+        border-top: none;
+        border-right: 1px solid var(--border-subtle);
+        box-shadow: none;
+      }
+    }
+
+    .brand-section {
+      display: none;
+    }
+
+    @media (min-width: 860px) {
+      .brand-section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+      }
+    }
+
+    .brand-title {
+      font-family: var(--font-serif);
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--forest-dark);
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .brand-tagline {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .nav-items {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+    }
+
+    @media (min-width: 860px) {
+      .nav-items {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 0.8rem;
+      min-height: var(--tap-min);
+      min-width: var(--tap-min);
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: var(--radius-md);
+      font-size: 0.75rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      gap: 0.2rem;
+    }
+
+    @media (min-width: 860px) {
+      .nav-btn {
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 0.75rem;
+        font-size: 0.95rem;
+        padding: 0.75rem 1rem;
+        width: 100%;
+      }
+    }
+
+    .nav-btn svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      transition: transform 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      color: var(--forest-mid);
+      background-color: var(--forest-light);
+    }
+
+    .nav-btn.active {
+      color: var(--forest-dark);
+      background-color: var(--forest-light);
+      font-weight: 700;
+    }
+
+    .nav-btn.active svg {
+      stroke: var(--forest-mid);
+      transform: scale(1.12);
+    }
+
+    .nav-footer {
+      display: none;
+    }
+
+    @media (min-width: 860px) {
+      .nav-footer {
+        display: flex;
+        flex-direction: column;
+        margin-top: auto;
+        gap: 0.75rem;
+        font-size: 0.8rem;
+        color: var(--text-subtle);
+        border-top: 1px solid var(--border-subtle);
+        padding-top: 1.25rem;
+      }
+    }
+
+    .theme-toggle-btn {
+      background: none;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.4rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      width: fit-content;
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle-btn:hover {
+      background: var(--forest-light);
+      color: var(--forest-dark);
+      border-color: var(--forest-mid);
+    }
+
+    /* Main Viewport */
+    .main-viewport {
+      flex: 1;
+      padding: 1.25rem 1rem 6rem;
+      max-width: 920px;
+      width: 100%;
+    }
+
+    @media (min-width: 860px) {
+      .main-viewport {
+        padding: 2.5rem 3rem 4rem;
+      }
+    }
+
+    /* Mobile Header */
+    .mobile-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (min-width: 860px) {
+      .mobile-header {
+        display: none;
+      }
+    }
+
+    .mobile-logo {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--forest-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* -------------------------------------------------------------
+       POLISHED, DISTINCTIVE & BRIGHT HERO
+    ------------------------------------------------------------- */
+    .hero-banner {
+      background: linear-gradient(135deg, rgba(254, 248, 235, 0.98) 0%, rgba(254, 237, 215, 0.85) 45%, rgba(230, 245, 235, 0.95) 100%);
+      border: 1.5px solid rgba(216, 92, 31, 0.28);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin-bottom: 1.75rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(20, 56, 37, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    @media (min-width: 680px) {
+      .hero-banner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 2rem 2.25rem;
+      }
+    }
+
+    .hero-text h1 {
+      font-family: var(--font-serif);
+      font-size: 2.1rem;
+      line-height: 1.15;
+      color: var(--forest-dark);
+      letter-spacing: -0.025em;
+    }
+
+    .hero-text h1 .highlight-text {
+      color: var(--sunrise);
+      position: relative;
+    }
+
+    .hero-text p {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+      max-width: 490px;
+      line-height: 1.55;
+    }
+
+    /* Interactive Art in Hero */
+    .hero-art-interactive {
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      align-self: center;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .hero-art-interactive:hover {
+      transform: scale(1.06);
+    }
+
+    .hero-art-interactive:active {
+      transform: scale(0.96);
+    }
+
+    .hero-art {
+      width: 140px;
+      height: 110px;
+      display: block;
+    }
+
+    @media (min-width: 680px) {
+      .hero-art {
+        width: 165px;
+        height: 125px;
+      }
+    }
+
+    /* Cute Speech Bubble Pop when tapping bird */
+    .bird-chirp-bubble {
+      position: absolute;
+      top: -12px;
+      right: -10px;
+      background: #ffffff;
+      color: var(--forest-dark);
+      border: 1px solid var(--sunrise);
+      border-radius: var(--radius-full);
+      padding: 0.25rem 0.65rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      box-shadow: var(--shadow-md);
+      opacity: 0;
+      transform: translateY(6px) scale(0.85);
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      white-space: nowrap;
+      z-index: 10;
+    }
+
+    .bird-chirp-bubble.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Animations for illustration */
+    @keyframes branchSway {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(3deg); }
+    }
+
+    @keyframes sunPulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.12); opacity: 0.95; }
+    }
+
+    @keyframes birdHop {
+      0% { transform: translateY(0); }
+      40% { transform: translateY(-8px) rotate(-4deg); }
+      70% { transform: translateY(-2px) rotate(2deg); }
+      100% { transform: translateY(0); }
+    }
+
+    .art-branch {
+      transform-origin: 15px 85px;
+      animation: branchSway 5s ease-in-out infinite;
+    }
+
+    .art-sun {
+      transform-origin: 115px 35px;
+      animation: sunPulse 3.5s ease-in-out infinite;
+    }
+
+    .art-bird-group.hopping {
+      animation: birdHop 0.45s ease-out;
+    }
+
+    /* -------------------------------------------------------------
+       ALERTS & NOTICES
+    ------------------------------------------------------------- */
+    .alert-banner {
+      display: none;
+      padding: 0.9rem 1.25rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 1.25rem;
+      font-size: 0.92rem;
+      font-weight: 500;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .alert-banner.active {
+      display: flex;
+    }
+
+    .alert-error {
+      background-color: #fef2f2;
+      color: #991b1b;
+      border: 1.5px solid #fecaca;
+    }
+
+    .alert-warning {
+      background-color: #fffbeb;
+      color: #92400e;
+      border: 1.5px solid #fde68a;
+    }
+
+    .alert-banner svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Tabs */
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* -------------------------------------------------------------
+       RECORDER & CAPTURE CARD
+    ------------------------------------------------------------- */
+    .recorder-card {
+      background: var(--bg-paper);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.35rem;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .record-btn-container {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .record-ring {
+      position: absolute;
+      width: 108px;
+      height: 108px;
+      border-radius: var(--radius-full);
+      border: 2px dashed var(--border-strong);
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    .recording .record-ring {
+      border: 2.5px solid var(--sunrise);
+      animation: pulseRing 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+    }
+
+    @keyframes pulseRing {
+      0% { transform: scale(0.92); opacity: 0.9; }
+      100% { transform: scale(1.4); opacity: 0; }
+    }
+
+    .record-btn {
+      width: 90px;
+      height: 90px;
+      border-radius: var(--radius-full);
+      background: var(--forest-dark);
+      border: 4px solid var(--bg-paper);
+      box-shadow: var(--shadow-md);
+      color: #ffffff;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 2;
+    }
+
+    .record-btn:hover {
+      background: var(--forest-mid);
+      transform: scale(1.05);
+    }
+
+    .record-btn:active {
+      transform: scale(0.95);
+    }
+
+    .record-btn svg {
+      width: 32px;
+      height: 32px;
+      fill: currentColor;
+    }
+
+    .recording .record-btn {
+      background: var(--sunrise);
+      box-shadow: 0 0 24px rgba(216, 92, 31, 0.4);
+    }
+
+    .record-timer {
+      font-variant-numeric: tabular-nums;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      min-height: 1.6rem;
+    }
+
+    /* Live Waveform Canvas */
+    .waveform-visualizer {
+      width: 100%;
+      max-width: 480px;
+      height: 52px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      display: none;
+    }
+
+    .waveform-visualizer.active {
+      display: block;
+    }
+
+    /* Captured Audio Preview */
+    .audio-preview-box {
+      display: none;
+      width: 100%;
+      max-width: 520px;
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 1.1rem;
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .audio-preview-box.active {
+      display: flex;
+    }
+
+    .audio-preview-box audio {
+      width: 100%;
+      height: 42px;
+    }
+
+    .audio-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .btn-secondary {
+      background: var(--bg-paper);
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.9rem;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      min-height: var(--tap-min);
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-secondary:hover {
+      background: var(--forest-light);
+      border-color: var(--forest-mid);
+      color: var(--forest-dark);
+      transform: translateY(-1px);
+    }
+
+    /* Upload Fallback */
+    .upload-fallback {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      width: 100%;
+      max-width: 420px;
+      padding-top: 0.85rem;
+      border-top: 1px dashed var(--border-subtle);
+    }
+
+    .upload-label {
+      color: var(--forest-mid);
+      font-weight: 700;
+      text-decoration: underline;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      min-height: var(--tap-min);
+      transition: color 0.2s ease;
+    }
+
+    .upload-label:hover {
+      color: var(--sunrise);
+    }
+
+    .file-input-hidden {
+      display: none;
+    }
+
+    /* Collapsible Details Panel */
+    .details-toggle {
+      background: var(--bg-paper);
+      border: 1px solid var(--border-subtle);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--forest-mid);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 0.95rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.85rem;
+      transition: all 0.2s ease;
+    }
+
+    .details-toggle:hover {
+      background: var(--forest-light);
+      color: var(--forest-dark);
+    }
+
+    .details-toggle svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.2s ease;
+    }
+
+    .details-toggle.open svg {
+      transform: rotate(180deg);
+    }
+
+    .details-panel {
+      display: none;
+      background: var(--bg-paper);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.35rem;
+      margin-bottom: 1.5rem;
+      grid-template-columns: 1fr;
+      gap: 1.1rem;
+    }
+
+    @media (min-width: 640px) {
+      .details-panel {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .details-panel.open {
+      display: grid;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      text-align: left;
+    }
+
+    .form-group label {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .form-control {
+      background: var(--bg-base);
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem 0.8rem;
+      font-size: 0.92rem;
+      color: var(--text-main);
+      font-family: inherit;
+      width: 100%;
+      min-height: var(--tap-min);
+    }
+
+    .form-control:focus {
+      border-color: var(--forest-mid);
+      outline: none;
+      background: #ffffff;
+    }
+
+    /* Primary Identify Action */
+    .btn-identify {
+      background: linear-gradient(135deg, var(--forest-dark) 0%, var(--forest-mid) 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 0.95rem 2.25rem;
+      font-size: 1.08rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      min-height: var(--tap-min);
+      width: 100%;
+      box-shadow: 0 4px 14px rgba(20, 56, 37, 0.2);
+      transition: all 0.2s ease;
+    }
+
+    .btn-identify:hover:not(:disabled) {
+      background: linear-gradient(135deg, var(--forest-mid) 0%, var(--forest-accent) 100%);
+      box-shadow: 0 6px 20px rgba(20, 56, 37, 0.28);
+      transform: translateY(-2px);
+    }
+
+    .btn-identify:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn-identify:disabled {
+      background: var(--border-strong);
+      color: var(--text-subtle);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .spinner-icon {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2.5px solid rgba(255, 255, 255, 0.35);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .loading .spinner-icon {
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* -------------------------------------------------------------
+       POLISHED & INTERACTIVE BIRD CARDS
+    ------------------------------------------------------------- */
+    .results-container {
+      margin-top: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .section-heading {
+      font-family: var(--font-serif);
+      font-size: 1.45rem;
+      color: var(--forest-dark);
+      letter-spacing: -0.015em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .bird-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 600px) {
+      .bird-grid {
+        grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      }
+    }
+
+    /* Distinctive, Bright Bird Card */
+    .bird-card {
+      background: var(--bg-paper);
+      border: 1.5px solid var(--border-subtle);
+      border-top: 4px solid var(--forest-mid);
+      border-radius: var(--radius-md);
+      padding: 1.35rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .bird-card:hover {
+      box-shadow: 0 8px 24px rgba(20, 56, 37, 0.12);
+      transform: translateY(-3px);
+      border-color: var(--forest-mid);
+    }
+
+    .bird-card.is-new-card {
+      border-top-color: var(--sunrise);
+      background: linear-gradient(180deg, rgba(254, 240, 231, 0.35) 0%, var(--bg-paper) 35%);
+    }
+
+    .bird-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.65rem;
+    }
+
+    .bird-name-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .bird-common-name {
+      font-family: var(--font-serif);
+      font-size: 1.22rem;
+      font-weight: 700;
+      color: var(--forest-dark);
+      line-height: 1.25;
+    }
+
+    .bird-scientific-name {
+      font-style: italic;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* Circular SVG Confidence Dial */
+    .conf-dial {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .conf-dial svg {
+      width: 44px;
+      height: 44px;
+      transform: rotate(-90deg);
+    }
+
+    .conf-dial circle.bg {
+      fill: none;
+      stroke: var(--border-subtle);
+      stroke-width: 3.5;
+    }
+
+    .conf-dial circle.fg {
+      fill: none;
+      stroke: var(--forest-mid);
+      stroke-width: 3.5;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.8s ease;
+    }
+
+    .conf-dial.high circle.fg {
+      stroke: var(--forest-mid);
+    }
+
+    .conf-dial.mid circle.fg {
+      stroke: var(--moss);
+    }
+
+    .conf-dial.low circle.fg {
+      stroke: var(--sunrise);
+    }
+
+    .conf-dial-text {
+      position: absolute;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--forest-dark);
+    }
+
+    /* Card Interactive Action Row */
+    .bird-card-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 0.65rem;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.8rem;
+    }
+
+    .time-chip {
+      color: var(--text-subtle);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.78rem;
+    }
+
+    .btn-card-segment {
+      background: var(--forest-light);
+      border: 1px solid var(--forest-mid);
+      color: var(--forest-dark);
+      border-radius: var(--radius-full);
+      padding: 0.25rem 0.6rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-card-segment:hover {
+      background: var(--forest-mid);
+      color: #ffffff;
+      transform: scale(1.04);
+    }
+
+    /* Ribbon for New Life List additions */
+    .new-species-ribbon {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: linear-gradient(135deg, var(--sunrise) 0%, var(--sunrise-gold) 100%);
+      color: #ffffff;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      padding: 0.22rem 0.85rem;
+      border-bottom-left-radius: var(--radius-sm);
+      box-shadow: 0 2px 6px rgba(216, 92, 31, 0.3);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      animation: ribbonShimmer 2.5s infinite;
+    }
+
+    @keyframes ribbonShimmer {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.15); }
+    }
+
+    /* -------------------------------------------------------------
+       POLISHED, DISTINCTIVE FIELD JOURNAL CARD
+    ------------------------------------------------------------- */
+    .journal-notebook-card {
+      background-color: #fffdf9;
+      background-image: repeating-linear-gradient(
+        transparent,
+        transparent 31px,
+        var(--journal-line) 32px
+      );
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      box-shadow: 0 6px 22px rgba(20, 56, 37, 0.08);
+      position: relative;
+      overflow: hidden;
+      margin-top: 0.85rem;
+    }
+
+    /* Stitched Leather Header Tape */
+    .journal-leather-tape {
+      background: linear-gradient(90deg, var(--forest-dark) 0%, var(--forest-mid) 100%);
+      color: #f7faf7;
+      padding: 0.55rem 1.25rem;
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px dashed rgba(255, 255, 255, 0.3);
+    }
+
+    .journal-body-container {
+      position: relative;
+      padding: 1.75rem 1.75rem 1.5rem 3.25rem;
+    }
+
+    /* Classic Naturalist Red Margin Line */
+    .journal-body-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 2.25rem;
+      width: 2px;
+      background: var(--journal-margin);
+    }
+
+    .journal-meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px dashed var(--border-subtle);
+      padding-bottom: 0.65rem;
+      margin-bottom: 1.2rem;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      gap: 0.5rem;
+    }
+
+    /* Inky Terracotta Date Stamp */
+    .journal-date-stamp {
+      font-family: var(--font-serif);
+      font-weight: 800;
+      color: var(--sunrise);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--sunrise-light);
+      border: 1px dashed var(--sunrise);
+      border-radius: var(--radius-sm);
+      padding: 0.2rem 0.6rem;
+      letter-spacing: 0.02em;
+    }
+
+    .journal-text-content {
+      font-family: var(--font-serif);
+      font-size: 1.12rem;
+      line-height: 32px;
+      color: var(--text-main);
+      white-space: pre-wrap;
+      transition: font-size 0.2s ease;
+    }
+
+    .journal-text-content .species-highlight {
+      background: rgba(78, 122, 59, 0.15);
+      border-bottom: 2px solid var(--moss);
+      padding: 0 3px;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+
+    .journal-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--border-subtle);
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .journal-font-controls {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.2rem 0.4rem;
+    }
+
+    .btn-font-size {
+      background: none;
+      border: none;
+      color: var(--forest-dark);
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.82rem;
+    }
+
+    .btn-font-size:hover {
+      background: var(--forest-light);
+    }
+
+    .journal-action-buttons {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    /* -------------------------------------------------------------
+       LIFE LIST TAB: STAMP CARDS & SEARCH
+    ------------------------------------------------------------- */
+    .lifelist-header {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (min-width: 600px) {
+      .lifelist-header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    .lifelist-search {
+      max-width: 320px;
+      width: 100%;
+    }
+
+    .stamp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .stamp-card {
+      background: var(--bg-paper);
+      border: 2px dashed var(--border-stamp);
+      border-radius: var(--radius-sm);
+      padding: 1.35rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      position: relative;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .stamp-card:hover {
+      border-color: var(--forest-mid);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      background: #ffffff;
+    }
+
+    .stamp-seal {
+      position: absolute;
+      top: 0.85rem;
+      right: 0.85rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--moss);
+      opacity: 0.85;
+    }
+
+    .stamp-common {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--forest-dark);
+      padding-right: 2rem;
+    }
+
+    .stamp-scientific {
+      font-style: italic;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .stamp-meta {
+      font-size: 0.77rem;
+      color: var(--text-subtle);
+      margin-top: auto;
+      padding-top: 0.6rem;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3.5rem 1.5rem;
+      background: var(--bg-paper);
+      border: 1.5px dashed var(--border-strong);
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .empty-state svg {
+      width: 48px;
+      height: 48px;
+      stroke: var(--text-subtle);
+    }
+
+    .empty-state h3 {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      color: var(--text-main);
+    }
+
+    .empty-state p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      max-width: 380px;
+    }
+
+    /* -------------------------------------------------------------
+       WEEKLY GOAL TAB
+    ------------------------------------------------------------- */
+    .goal-card {
+      background: var(--bg-paper);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.75rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-ring-container {
+      position: relative;
+      width: 180px;
+      height: 180px;
+    }
+
+    .progress-ring-circle-bg {
+      stroke: var(--border-subtle);
+      stroke-width: 12;
+      fill: transparent;
+    }
+
+    .progress-ring-circle {
+      stroke: var(--forest-mid);
+      stroke-width: 12;
+      stroke-linecap: round;
+      fill: transparent;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+      transition: stroke-dashoffset 0.8s ease-in-out, stroke 0.3s;
+    }
+
+    .goal-achieved .progress-ring-circle {
+      stroke: var(--sunrise);
+    }
+
+    .progress-ring-label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .progress-number {
+      font-family: var(--font-serif);
+      font-size: 2.75rem;
+      font-weight: 700;
+      color: var(--forest-dark);
+      line-height: 1;
+    }
+
+    .progress-subtext {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .goal-message-box {
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .goal-headline {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      color: var(--forest-dark);
+      font-weight: 700;
+    }
+
+    .goal-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .celebration-banner {
+      display: none;
+      background: var(--sunrise-light);
+      border: 1px solid var(--sunrise);
+      color: var(--sunrise-hover);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1.25rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .goal-achieved .celebration-banner {
+      display: flex;
+      animation: bounce 0.6s ease;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      bottom: 5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+
+    @media (min-width: 860px) {
+      .toast-container {
+        bottom: 2rem;
+        right: 2rem;
+        left: auto;
+        transform: none;
+      }
+    }
+
+    .toast {
+      background: var(--forest-dark);
+      color: #ffffff;
+      padding: 0.65rem 1.25rem;
+      border-radius: var(--radius-full);
+      font-size: 0.86rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.25s ease;
+      pointer-events: auto;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast.error {
+      background: #991b1b;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-shell">
+
+    <!-- NAVIGATION: LEFT RAIL ON DESKTOP, BOTTOM BAR ON MOBILE -->
+    <nav class="nav-bar" aria-label="Main Navigation">
+      <div class="brand-section">
+        <div class="brand-title">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+            <path d="M6 2v20"></path>
+          </svg>
+          Field Notes
+        </div>
+        <p class="brand-tagline">Naturalist's companion</p>
+      </div>
+
+      <div class="nav-items" role="tablist">
+        <button class="nav-btn active" role="tab" aria-selected="true" id="tab-btn-today" data-tab="tab-today">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span>Today</span>
+        </button>
+
+        <button class="nav-btn" role="tab" aria-selected="false" id="tab-btn-lifelist" data-tab="tab-lifelist">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+          </svg>
+          <span>Life List</span>
+        </button>
+
+        <button class="nav-btn" role="tab" aria-selected="false" id="tab-btn-weekly" data-tab="tab-weekly">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="m9 12 2 2 4-4"></path>
+          </svg>
+          <span>Weekly Goal</span>
+        </button>
+      </div>
+
+      <div class="nav-footer">
+        <div>100% Offline & Private</div>
+        <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Theme">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <span id="theme-label">Dusk Theme</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- MAIN VIEWPORT -->
+    <main class="main-viewport">
+
+      <!-- Mobile Header -->
+      <header class="mobile-header">
+        <div class="mobile-logo">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+          </svg>
+          Field Notes
+        </div>
+        <button class="theme-toggle-btn" id="theme-toggle-mobile" aria-label="Toggle Theme">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </header>
+
+      <!-- Global Error / Warning Banner -->
+      <div id="alert-banner" class="alert-banner" role="alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span id="alert-text">Notice</span>
+      </div>
+
+      <!-- TAB 1: TODAY -->
+      <section id="tab-today" class="tab-panel active" role="tabpanel" aria-labelledby="tab-btn-today">
+        
+        <!-- POLISHED, DISTINCTIVE HERO WITH INTERACTIVE TAP-TO-CHIRP -->
+        <div class="hero-banner">
+          <div class="hero-text">
+            <h1>Field Notes</h1>
+            <p>Listen locally with BirdNET, capture personal reflections with your local LLM, and track your life list outdoors.</p>
+          </div>
+
+          <!-- Interactive Art: Tap the bird on the branch to chirp! -->
+          <div class="hero-art-interactive" id="hero-art-interactive" title="Tap the bird to hear a chirp!">
+            <div class="bird-chirp-bubble" id="bird-chirp-bubble">♫ Cheep-cheep!</div>
+            <svg class="hero-art" viewBox="0 0 160 120" fill="none">
+              <!-- Sunrise glow with morning warmth -->
+              <circle class="art-sun" cx="120" cy="40" r="28" fill="#e59324" opacity="0.3"></circle>
+              <circle class="art-sun" cx="120" cy="40" r="18" fill="#d85c1f" opacity="0.65"></circle>
+              
+              <!-- Layered morning ridge hills -->
+              <path d="M0 92 Q 45 74, 90 94 T 160 96 L 160 120 L 0 120 Z" fill="#4e7a3b" opacity="0.4"></path>
+              <path d="M15 102 Q 65 84, 160 98 L 160 120 L 0 120 Z" fill="#1e5c3a" opacity="0.75"></path>
+              
+              <!-- Branch and perched warbler -->
+              <g class="art-branch">
+                <path d="M8 94 Q 55 86, 102 70 Q 128 62, 150 60" stroke="#4a3828" stroke-width="3.5" stroke-linecap="round"></path>
+                <path d="M68 86 Q 80 76, 84 66" stroke="#4a3828" stroke-width="2.5" stroke-linecap="round"></path>
+                
+                <!-- Leaves with lush moss fill -->
+                <path d="M84 66 Q 92 60, 87 54 Q 78 58, 84 66 Z" fill="#4e7a3b"></path>
+                <path d="M124 64 Q 134 58, 128 50 Q 118 56, 124 64 Z" fill="#4e7a3b"></path>
+                
+                <!-- Perched bird with interactive hop -->
+                <g class="art-bird-group" id="art-bird-group">
+                  <ellipse cx="98" cy="62" rx="11" ry="8.5" fill="#143825"></ellipse>
+                  <!-- Breast patch highlight -->
+                  <ellipse cx="102" cy="64" rx="6" ry="5" fill="#d85c1f" opacity="0.9"></ellipse>
+                  <circle cx="105" cy="56" r="6" fill="#143825"></circle>
+                  <!-- Eye spark -->
+                  <circle cx="107" cy="55" r="1" fill="#ffffff"></circle>
+                  <!-- Amber beak -->
+                  <polygon points="110,55 117,58 110,60" fill="#e59324"></polygon>
+                  <!-- Tail feathers -->
+                  <polygon points="89,64 78,72 82,75 92,68" fill="#143825"></polygon>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Audio Capture Card -->
+        <div class="recorder-card" id="recorder-card">
+          <div class="record-btn-container">
+            <div class="record-ring"></div>
+            <button class="record-btn" id="record-btn" aria-label="Start audio recording">
+              <svg id="mic-icon" viewBox="0 0 24 24">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="22"></line>
+              </svg>
+              <svg id="stop-icon" viewBox="0 0 24 24" style="display: none;">
+                <rect x="6" y="6" width="12" height="12" rx="2"></rect>
+              </svg>
+            </button>
+          </div>
+
+          <div class="record-timer" id="record-timer">Tap microphone to record bird song</div>
+
+          <!-- Live audio waveform visualizer -->
+          <canvas id="waveform-canvas" class="waveform-visualizer" width="480" height="52"></canvas>
+
+          <!-- Captured Audio Preview -->
+          <div id="audio-preview-box" class="audio-preview-box">
+            <audio id="audio-player" controls></audio>
+            <div class="audio-actions">
+              <button class="btn-secondary" id="re-record-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                  <path d="M3 3v5h5"></path>
+                </svg>
+                Clear / Re-record
+              </button>
+            </div>
+          </div>
+
+          <!-- Upload fallback -->
+          <div class="upload-fallback">
+            <span>Or select an existing sound clip:</span>
+            <label class="upload-label" for="audio-file-input">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              Choose audio file (.wav, .mp3, .ogg)
+            </label>
+            <input type="file" id="audio-file-input" class="file-input-hidden" accept="audio/*" capture="environment">
+            <span id="selected-filename" style="font-size: 0.8rem; color: var(--text-subtle);"></span>
+          </div>
+        </div>
+
+        <!-- Collapsible Observation Details -->
+        <button class="details-toggle" id="details-toggle" aria-expanded="false" aria-controls="details-panel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+          Observation & Model Options
+        </button>
+
+        <div id="details-panel" class="details-panel">
+          <div class="form-group">
+            <label for="place-input">Location / Habitat (optional)</label>
+            <input type="text" id="place-input" class="form-control" placeholder="e.g. Forest Park, Portland">
+          </div>
+
+          <div class="form-group">
+            <label for="confidence-slider">
+              Min Confidence Threshold: <span id="conf-val" style="color: var(--forest-dark); font-weight: 700;">50%</span>
+            </label>
+            <input type="range" id="confidence-slider" class="form-control" min="0.1" max="0.95" step="0.05" value="0.5" style="padding: 0;">
+          </div>
+
+          <div class="form-group">
+            <label for="model-select">Local Ollama Model</label>
+            <select id="model-select" class="form-control">
+              <option value="llama3.2:3b">llama3.2:3b (default)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Coordinates (optional)</label>
+            <div style="display: flex; gap: 0.5rem;">
+              <input type="number" id="lat-input" class="form-control" placeholder="Latitude" step="0.0001">
+              <input type="number" id="lon-input" class="form-control" placeholder="Longitude" step="0.0001">
+            </div>
+          </div>
+        </div>
+
+        <!-- Primary Action Button -->
+        <button class="btn-identify" id="identify-btn" disabled>
+          <span class="spinner-icon" id="spinner-icon"></span>
+          <span id="identify-btn-text">Identify Birds & Draft Journal</span>
+        </button>
+
+        <!-- Dynamic Results Section -->
+        <div id="results-section" class="results-container" style="display: none;">
+          <div>
+            <h2 class="section-heading">
+              <span>Detected Species</span>
+              <span id="detection-count-pill" style="font-size: 0.85rem; font-family: var(--font-sans); color: var(--text-muted); font-weight: 600;"></span>
+            </h2>
+            <div id="bird-cards-container" class="bird-grid" style="margin-top: 0.85rem;"></div>
+          </div>
+
+          <!-- POLISHED NATURALIST NOTEBOOK CARD -->
+          <div>
+            <h2 class="section-heading">Field Journal Entry</h2>
+            <div class="journal-notebook-card" id="journal-notebook-card">
+              <!-- Stitched Leather Header -->
+              <div class="journal-leather-tape">
+                <span>🌿 Field Journal Dispatch • Naturalist Log</span>
+                <span id="journal-word-count" style="opacity: 0.85; font-size: 0.72rem;">Ollama AI</span>
+              </div>
+
+              <div class="journal-body-container">
+                <div class="journal-meta-bar">
+                  <span class="journal-date-stamp" id="journal-date-stamp">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span id="journal-date-text">Observation</span>
+                  </span>
+                  <span id="journal-place-text" style="font-weight: 600; color: var(--forest-dark);"></span>
+                </div>
+
+                <div class="journal-text-content" id="journal-text"></div>
+
+                <!-- Interactive Notebook Toolbar -->
+                <div class="journal-toolbar">
+                  <!-- Font size adjustments -->
+                  <div class="journal-font-controls" title="Adjust journal text size">
+                    <span style="font-size: 0.75rem; color: var(--text-subtle); margin-right: 2px;">Font</span>
+                    <button class="btn-font-size" id="font-dec-btn" aria-label="Decrease font size">A−</button>
+                    <button class="btn-font-size" id="font-inc-btn" aria-label="Increase font size">A+</button>
+                  </div>
+
+                  <div class="journal-action-buttons">
+                    <!-- Read aloud TTS button -->
+                    <button class="btn-secondary" id="speak-journal-btn" title="Read notes aloud in nature">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                      </svg>
+                      <span id="speak-btn-text">Listen</span>
+                    </button>
+
+                    <!-- Copy text -->
+                    <button class="btn-secondary" id="copy-journal-btn">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                      </svg>
+                      <span id="copy-btn-text">Copy Notes</span>
+                    </button>
+
+                    <!-- Export Markdown -->
+                    <a class="btn-secondary" id="export-md-link" download>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                      </svg>
+                      Download .md
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- TAB 2: LIFE LIST -->
+      <section id="tab-lifelist" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-lifelist">
+        <div class="lifelist-header">
+          <div>
+            <h2 class="section-heading" id="lifelist-total">My Life List</h2>
+            <p style="font-size: 0.86rem; color: var(--text-muted); margin-top: 0.25rem;">
+              Unique species verified and collected offline in the field.
+            </p>
+          </div>
+          <div class="lifelist-search">
+            <input type="text" id="lifelist-search-input" class="form-control" placeholder="Search species or place...">
+          </div>
+        </div>
+
+        <div id="stamp-grid" class="stamp-grid"></div>
+
+        <div id="lifelist-empty" class="empty-state" style="display: none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+          </svg>
+          <h3>Your Life List is empty</h3>
+          <p>Record or upload bird sound clips on the Today tab to identify species and collect your first sighting.</p>
+        </div>
+      </section>
+
+      <!-- TAB 3: WEEKLY GOAL -->
+      <section id="tab-weekly" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-weekly">
+        <div class="goal-card" id="goal-card">
+          <h2 class="section-heading">Weekly Discovery Goal</h2>
+          
+          <div class="progress-ring-container">
+            <svg width="180" height="180">
+              <circle class="progress-ring-circle-bg" cx="90" cy="90" r="76"></circle>
+              <circle id="goal-ring" class="progress-ring-circle" cx="90" cy="90" r="76" stroke-dasharray="477.5" stroke-dashoffset="477.5"></circle>
+            </svg>
+            <div class="progress-ring-label">
+              <div class="progress-number" id="goal-count-text">0</div>
+              <div class="progress-subtext" id="goal-target-text">of 5 new birds</div>
+            </div>
+          </div>
+
+          <div class="celebration-banner" id="celebration-banner">
+            🎉 Weekly Goal Reached! Wonderful birding!
+          </div>
+
+          <div class="goal-message-box">
+            <div class="goal-headline" id="goal-headline">Step outside into nature</div>
+            <p class="goal-desc" id="goal-subtext">
+              Finding 5 new species each week keeps your ears tuned to the canopy and trees.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- JAVASCRIPT: VANILLA JS CLIENT -->
+  <script>
+    (() => {
+      // -----------------------------------------------------------
+      // STATE & REFERENCES
+      // -----------------------------------------------------------
+      let recordedAudioBlob = null;
+      let mediaRecorder = null;
+      let audioChunks = [];
+      let recordTimerInterval = null;
+      let recordStartTime = 0;
+      let audioCtx = null;
+      let analyser = null;
+      let animFrameId = null;
+      let lifeListEntries = [];
+      let currentJournalFontSize = 1.12;
+
+      // DOM Elements
+      const navButtons = document.querySelectorAll('.nav-btn');
+      const tabPanels = document.querySelectorAll('.tab-panel');
+      const alertBanner = document.getElementById('alert-banner');
+      const alertText = document.getElementById('alert-text');
+      const recordBtn = document.getElementById('record-btn');
+      const recorderCard = document.getElementById('recorder-card');
+      const micIcon = document.getElementById('mic-icon');
+      const stopIcon = document.getElementById('stop-icon');
+      const recordTimer = document.getElementById('record-timer');
+      const waveformCanvas = document.getElementById('waveform-canvas');
+      const audioPreviewBox = document.getElementById('audio-preview-box');
+      const audioPlayer = document.getElementById('audio-player');
+      const reRecordBtn = document.getElementById('re-record-btn');
+      const fileInput = document.getElementById('audio-file-input');
+      const selectedFilename = document.getElementById('selected-filename');
+      const detailsToggle = document.getElementById('details-toggle');
+      const detailsPanel = document.getElementById('details-panel');
+      const confSlider = document.getElementById('confidence-slider');
+      const confVal = document.getElementById('conf-val');
+      const modelSelect = document.getElementById('model-select');
+      const placeInput = document.getElementById('place-input');
+      const latInput = document.getElementById('lat-input');
+      const lonInput = document.getElementById('lon-input');
+      const identifyBtn = document.getElementById('identify-btn');
+      const identifyBtnText = document.getElementById('identify-btn-text');
+      const spinnerIcon = document.getElementById('spinner-icon');
+      const resultsSection = document.getElementById('results-section');
+      const birdCardsContainer = document.getElementById('bird-cards-container');
+      const detectionCountPill = document.getElementById('detection-count-pill');
+      const journalDateText = document.getElementById('journal-date-text');
+      const journalPlaceText = document.getElementById('journal-place-text');
+      const journalText = document.getElementById('journal-text');
+      const copyJournalBtn = document.getElementById('copy-journal-btn');
+      const copyBtnText = document.getElementById('copy-btn-text');
+      const exportMdLink = document.getElementById('export-md-link');
+      const speakJournalBtn = document.getElementById('speak-journal-btn');
+      const speakBtnText = document.getElementById('speak-btn-text');
+      const fontDecBtn = document.getElementById('font-dec-btn');
+      const fontIncBtn = document.getElementById('font-inc-btn');
+      const stampGrid = document.getElementById('stamp-grid');
+      const lifelistEmpty = document.getElementById('lifelist-empty');
+      const lifelistTotal = document.getElementById('lifelist-total');
+      const lifelistSearch = document.getElementById('lifelist-search-input');
+      const goalCard = document.getElementById('goal-card');
+      const goalRing = document.getElementById('goal-ring');
+      const goalCountText = document.getElementById('goal-count-text');
+      const goalTargetText = document.getElementById('goal-target-text');
+      const goalHeadline = document.getElementById('goal-headline');
+      const celebrationBanner = document.getElementById('celebration-banner');
+      const toastContainer = document.getElementById('toast-container');
+      const themeToggle = document.getElementById('theme-toggle');
+      const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+      const themeLabel = document.getElementById('theme-label');
+      const heroArtInteractive = document.getElementById('hero-art-interactive');
+      const artBirdGroup = document.getElementById('art-bird-group');
+      const birdChirpBubble = document.getElementById('bird-chirp-bubble');
+
+      // -----------------------------------------------------------
+      // SYNTHESIZED OFFLINE BIRD CHIRP (Web Audio API)
+      // -----------------------------------------------------------
+      function playSyntheticChirp() {
+        try {
+          const ctx = new (window.AudioContext || window.webkitAudioContext)();
+          const now = ctx.currentTime;
+
+          // Note 1
+          const osc1 = ctx.createOscillator();
+          const gain1 = ctx.createGain();
+          osc1.type = 'sine';
+          osc1.frequency.setValueAtTime(2800, now);
+          osc1.frequency.exponentialRampToValueAtTime(3800, now + 0.08);
+          gain1.gain.setValueAtTime(0, now);
+          gain1.gain.linearRampToValueAtTime(0.2, now + 0.02);
+          gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+          osc1.connect(gain1);
+          gain1.connect(ctx.destination);
+          osc1.start(now);
+          osc1.stop(now + 0.1);
+
+          // Note 2
+          const osc2 = ctx.createOscillator();
+          const gain2 = ctx.createGain();
+          osc2.type = 'sine';
+          osc2.frequency.setValueAtTime(3200, now + 0.12);
+          osc2.frequency.exponentialRampToValueAtTime(4200, now + 0.22);
+          gain2.gain.setValueAtTime(0, now + 0.12);
+          gain2.gain.linearRampToValueAtTime(0.25, now + 0.15);
+          gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+          osc2.connect(gain2);
+          gain2.connect(ctx.destination);
+          osc2.start(now + 0.12);
+          osc2.stop(now + 0.26);
+
+          setTimeout(() => ctx.close(), 400);
+        } catch (e) {
+          // AudioContext might be muted or not allowed without user gesture
+        }
+      }
+
+      // Hero bird interactive tap
+      const chirpGreetings = [
+        "♫ Cheep-cheep!",
+        "♫ Listen closely!",
+        "🌿 Touch grass today!",
+        "♫ Morning chorus!",
+        "★ Wild birds nearby!"
+      ];
+      let chirpIndex = 0;
+
+      if (heroArtInteractive) {
+        heroArtInteractive.addEventListener('click', () => {
+          playSyntheticChirp();
+          artBirdGroup.classList.remove('hopping');
+          void artBirdGroup.offsetWidth; // trigger reflow
+          artBirdGroup.classList.add('hopping');
+
+          birdChirpBubble.textContent = chirpGreetings[chirpIndex % chirpGreetings.length];
+          chirpIndex++;
+          birdChirpBubble.classList.add('active');
+          setTimeout(() => birdChirpBubble.classList.remove('active'), 2000);
+        });
+      }
+
+      // -----------------------------------------------------------
+      // TOASTS & ALERTS
+      // -----------------------------------------------------------
+      function showToast(message, isError = false) {
+        const toast = document.createElement('div');
+        toast.className = `toast ${isError ? 'error' : ''}`;
+        toast.textContent = message;
+        toastContainer.appendChild(toast);
+        requestAnimationFrame(() => toast.classList.add('show'));
+        setTimeout(() => {
+          toast.classList.remove('show');
+          setTimeout(() => toast.remove(), 300);
+        }, 3200);
+      }
+
+      function showAlert(msg, isWarning = false) {
+        alertText.textContent = msg;
+        alertBanner.className = `alert-banner active ${isWarning ? 'alert-warning' : 'alert-error'}`;
+      }
+
+      function clearAlert() {
+        alertBanner.className = 'alert-banner';
+      }
+
+      // -----------------------------------------------------------
+      // THEME TOGGLE
+      // -----------------------------------------------------------
+      function toggleTheme() {
+        const current = document.documentElement.getAttribute('data-theme') || 
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('fieldnotes-theme', next);
+        if (themeLabel) themeLabel.textContent = next === 'dark' ? 'Paper Theme' : 'Dusk Theme';
+      }
+
+      const savedTheme = localStorage.getItem('fieldnotes-theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        if (themeLabel) themeLabel.textContent = savedTheme === 'dark' ? 'Paper Theme' : 'Dusk Theme';
+      }
+
+      if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+      if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
+
+      // -----------------------------------------------------------
+      // TABS
+      // -----------------------------------------------------------
+      navButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('data-tab');
+          navButtons.forEach(b => {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          tabPanels.forEach(p => p.classList.remove('active'));
+
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+          const panel = document.getElementById(targetId);
+          if (panel) panel.classList.add('active');
+
+          if (targetId === 'tab-lifelist') loadLifeList();
+          if (targetId === 'tab-weekly') loadWeeklyGoal();
+        });
+      });
+
+      // -----------------------------------------------------------
+      // OLLAMA MODELS
+      // -----------------------------------------------------------
+      async function loadModels() {
+        try {
+          const res = await fetch('/api/models');
+          if (!res.ok) throw new Error('Failed to fetch Ollama models');
+          const data = await res.json();
+          modelSelect.innerHTML = '';
+          if (data.models && data.models.length > 0) {
+            data.models.forEach(m => {
+              const opt = document.createElement('option');
+              opt.value = m;
+              opt.textContent = m + (m === data.default ? ' (default)' : '');
+              if (m === data.default) opt.selected = true;
+              modelSelect.appendChild(opt);
+            });
+          } else {
+            const opt = document.createElement('option');
+            opt.value = 'llama3.2:3b';
+            opt.textContent = 'llama3.2:3b (not pulled yet)';
+            modelSelect.appendChild(opt);
+            showAlert("Ollama has no pulled models. Run 'ollama pull llama3.2:3b' to enable field journaling.", true);
+          }
+        } catch (e) {
+          showAlert("Ollama service isn't reachable. Start it with 'ollama serve' for field journaling.", true);
+        }
+      }
+
+      confSlider.addEventListener('input', () => {
+        confVal.textContent = `${Math.round(confSlider.value * 100)}%`;
+      });
+
+      detailsToggle.addEventListener('click', () => {
+        const isOpen = detailsPanel.classList.toggle('open');
+        detailsToggle.classList.toggle('open', isOpen);
+        detailsToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+
+      // -----------------------------------------------------------
+      // AUDIO RECORDING
+      // -----------------------------------------------------------
+      async function startRecording() {
+        clearAlert();
+        audioChunks = [];
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          mediaRecorder = new MediaRecorder(stream);
+
+          try {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const source = audioCtx.createMediaStreamSource(stream);
+            analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 64;
+            source.connect(analyser);
+            drawWaveform();
+            waveformCanvas.classList.add('active');
+          } catch (err) {
+            console.warn('AudioContext visualization not available:', err);
+          }
+
+          mediaRecorder.ondataavailable = e => {
+            if (e.data.size > 0) audioChunks.push(e.data);
+          };
+
+          mediaRecorder.onstop = () => {
+            recordedAudioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+            stream.getTracks().forEach(t => t.stop());
+            if (audioCtx) {
+              audioCtx.close();
+              audioCtx = null;
+            }
+            if (animFrameId) cancelAnimationFrame(animFrameId);
+            waveformCanvas.classList.remove('active');
+            displayCapturedAudio(recordedAudioBlob);
+          };
+
+          mediaRecorder.start();
+          recordStartTime = Date.now();
+          recorderCard.classList.add('recording');
+          micIcon.style.display = 'none';
+          stopIcon.style.display = 'block';
+
+          recordTimerInterval = setInterval(() => {
+            const elapsed = Math.floor((Date.now() - recordStartTime) / 1000);
+            const mins = String(Math.floor(elapsed / 60)).padStart(2, '0');
+            const secs = String(elapsed % 60).padStart(2, '0');
+            recordTimer.textContent = `Recording... ${mins}:${secs}`;
+          }, 200);
+
+        } catch (err) {
+          showAlert("Microphone access unavailable. You can upload an audio clip below.", true);
+        }
+      }
+
+      function stopRecording() {
+        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+          mediaRecorder.stop();
+        }
+        clearInterval(recordTimerInterval);
+        recorderCard.classList.remove('recording');
+        micIcon.style.display = 'block';
+        stopIcon.style.display = 'none';
+        recordTimer.textContent = 'Audio clip ready';
+      }
+
+      function drawWaveform() {
+        if (!analyser) return;
+        const ctx = waveformCanvas.getContext('2d');
+        const bufferLength = analyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+
+        const render = () => {
+          animFrameId = requestAnimationFrame(render);
+          analyser.getByteFrequencyData(dataArray);
+
+          ctx.clearRect(0, 0, waveformCanvas.width, waveformCanvas.height);
+          const barWidth = (waveformCanvas.width / bufferLength) * 2;
+          let x = 0;
+
+          for (let i = 0; i < bufferLength; i++) {
+            const barHeight = (dataArray[i] / 255) * waveformCanvas.height * 0.88;
+            ctx.fillStyle = '#d85c1f';
+            ctx.fillRect(x, waveformCanvas.height - barHeight, barWidth - 1, barHeight);
+            x += barWidth;
+          }
+        };
+        render();
+      }
+
+      recordBtn.addEventListener('click', () => {
+        if (mediaRecorder && mediaRecorder.state === 'recording') {
+          stopRecording();
+        } else {
+          startRecording();
+        }
+      });
+
+      function displayCapturedAudio(blob, filename = 'clip.wav') {
+        const url = URL.createObjectURL(blob);
+        audioPlayer.src = url;
+        audioPreviewBox.classList.add('active');
+        identifyBtn.disabled = false;
+        selectedFilename.textContent = filename;
+      }
+
+      reRecordBtn.addEventListener('click', () => {
+        recordedAudioBlob = null;
+        audioPlayer.src = '';
+        audioPreviewBox.classList.remove('active');
+        identifyBtn.disabled = true;
+        selectedFilename.textContent = '';
+        fileInput.value = '';
+        recordTimer.textContent = 'Tap microphone to record bird song';
+      });
+
+      fileInput.addEventListener('change', () => {
+        if (fileInput.files.length > 0) {
+          const file = fileInput.files[0];
+          recordedAudioBlob = file;
+          displayCapturedAudio(file, file.name);
+          recordTimer.textContent = `Selected: ${file.name}`;
+        }
+      });
+
+      // -----------------------------------------------------------
+      // IDENTIFY & JOURNAL
+      // -----------------------------------------------------------
+      identifyBtn.addEventListener('click', async () => {
+        if (!recordedAudioBlob) return;
+        clearAlert();
+
+        identifyBtn.disabled = true;
+        identifyBtn.classList.add('loading');
+        identifyBtnText.textContent = 'Listening closely & journaling...';
+
+        const formData = new FormData();
+        const filename = recordedAudioBlob.name || 'field_recording.wav';
+        formData.append('audio', recordedAudioBlob, filename);
+
+        if (placeInput.value.trim()) formData.append('place', placeInput.value.trim());
+        if (latInput.value.trim()) formData.append('lat', parseFloat(latInput.value));
+        if (lonInput.value.trim()) formData.append('lon', parseFloat(lonInput.value));
+        formData.append('min_confidence', parseFloat(confSlider.value));
+        formData.append('model', modelSelect.value);
+
+        try {
+          const response = await fetch('/api/identify', {
+            method: 'POST',
+            body: formData,
+          });
+
+          const result = await response.json();
+          if (!response.ok) {
+            throw new Error(result.detail || 'Failed to analyze bird sound clip.');
+          }
+
+          displayResults(result);
+          showToast('Observation identified and recorded!');
+        } catch (err) {
+          showAlert(err.message);
+        } finally {
+          identifyBtn.disabled = false;
+          identifyBtn.classList.remove('loading');
+          identifyBtnText.textContent = 'Identify Birds & Draft Journal';
+        }
+      });
+
+      // -----------------------------------------------------------
+      // RENDER POLISHED BIRD CARDS & JOURNAL
+      // -----------------------------------------------------------
+      function displayResults(data) {
+        resultsSection.style.display = 'flex';
+        birdCardsContainer.innerHTML = '';
+
+        const detections = data.detections || [];
+        const newSpecies = data.new_species || [];
+
+        detectionCountPill.textContent = detections.length === 1 
+          ? '1 species identified' 
+          : `${detections.length} species identified`;
+
+        if (detections.length === 0) {
+          birdCardsContainer.innerHTML = `
+            <div style="grid-column: 1 / -1; padding: 2rem 1.5rem; text-align: center; color: var(--text-muted); background: var(--bg-paper); border: 2px dashed var(--border-strong); border-radius: var(--radius-md);">
+              <div style="font-size: 1.5rem; margin-bottom: 0.25rem;">🍃</div>
+              <div style="font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; color: var(--forest-dark);">No clear bird songs detected</div>
+              <p style="font-size: 0.88rem; margin-top: 0.25rem;">The sound was below ${Math.round(confSlider.value * 100)}% confidence threshold. Try getting a bit closer to the trees or adjusting options.</p>
+            </div>
+          `;
+        } else {
+          const radius = 17;
+          const circumference = 2 * Math.PI * radius; // ~106.8
+
+          detections.forEach((d, idx) => {
+            const isNew = newSpecies.includes(d.common_name);
+            const confPct = Math.round(d.confidence * 100);
+            const confClass = confPct >= 80 ? 'high' : (confPct >= 60 ? 'mid' : 'low');
+            const offset = circumference - (d.confidence * circumference);
+
+            const card = document.createElement('div');
+            card.className = `bird-card ${isNew ? 'is-new-card' : ''}`;
+            card.id = `bird-card-${idx}`;
+            card.innerHTML = `
+              ${isNew ? '<div class="new-species-ribbon">★ NEW SIGHTING</div>' : ''}
+              
+              <div class="bird-header">
+                <div class="bird-name-group">
+                  <div class="bird-common-name">${escapeHtml(d.common_name)}</div>
+                  <div class="bird-scientific-name">${escapeHtml(d.scientific_name)}</div>
+                </div>
+
+                <!-- Circular SVG Dial -->
+                <div class="conf-dial ${confClass}" title="${confPct}% confidence rating">
+                  <svg viewBox="0 0 44 44">
+                    <circle class="bg" cx="22" cy="22" r="${radius}"></circle>
+                    <circle class="fg" cx="22" cy="22" r="${radius}" stroke-dasharray="${circumference.toFixed(1)}" stroke-dashoffset="${offset.toFixed(1)}"></circle>
+                  </svg>
+                  <span class="conf-dial-text">${confPct}%</span>
+                </div>
+              </div>
+
+              <div class="bird-card-actions">
+                <span class="time-chip">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  ${d.start_s.toFixed(1)}s – ${d.end_s.toFixed(1)}s
+                </span>
+
+                <div style="display: flex; gap: 0.4rem;">
+                  <!-- Jump to audio segment player button -->
+                  <button class="btn-card-segment btn-play-segment" data-start="${d.start_s}" data-end="${d.end_s}" title="Play audio snippet (${d.start_s.toFixed(1)}s - ${d.end_s.toFixed(1)}s)">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                      <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                    </svg>
+                    Play Snippet
+                  </button>
+
+                  <!-- Copy name -->
+                  <button class="btn-card-segment btn-copy-bird" data-name="${escapeHtml(d.common_name)}" title="Copy bird name">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            `;
+            birdCardsContainer.appendChild(card);
+          });
+
+          // Bind interactive snippet playback
+          document.querySelectorAll('.btn-play-segment').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const start = parseFloat(btn.getAttribute('data-start'));
+              const end = parseFloat(btn.getAttribute('data-end'));
+              if (audioPlayer.src) {
+                audioPlayer.currentTime = Math.max(0, start);
+                audioPlayer.play();
+                showToast(`Playing audio segment from ${start.toFixed(1)}s...`);
+              }
+            });
+          });
+
+          // Bind copy bird name
+          document.querySelectorAll('.btn-copy-bird').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const name = btn.getAttribute('data-name');
+              navigator.clipboard.writeText(name).then(() => {
+                showToast(`Copied "${name}"!`);
+              });
+            });
+          });
+        }
+
+        // Render Field Notebook
+        const now = new Date();
+        journalDateText.textContent = now.toLocaleDateString(undefined, {
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric'
+        });
+        journalPlaceText.textContent = placeInput.value.trim() 
+          ? `📍 ${escapeHtml(placeInput.value.trim())}` 
+          : '📍 In the Field';
+
+        // Format journal text with highlighted bird mentions
+        let rawJournal = data.journal || '';
+        let formattedJournal = escapeHtml(rawJournal);
+
+        detections.forEach(d => {
+          const escapedName = escapeHtml(d.common_name);
+          const regex = new RegExp(`(${escapedName})`, 'gi');
+          formattedJournal = formattedJournal.replace(regex, `<span class="species-highlight">$1</span>`);
+        });
+
+        journalText.innerHTML = formattedJournal;
+
+        // Export Markdown link
+        if (data.entry_id) {
+          exportMdLink.href = `/api/export/${data.entry_id}`;
+          exportMdLink.style.display = 'inline-flex';
+        } else {
+          exportMdLink.style.display = 'none';
+        }
+
+        resultsSection.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      // Copy Journal notes with tactile button feedback
+      copyJournalBtn.addEventListener('click', () => {
+        if (!journalText.textContent) return;
+        navigator.clipboard.writeText(journalText.textContent).then(() => {
+          copyBtnText.textContent = '✓ Copied!';
+          showToast('Field notes copied to clipboard!');
+          setTimeout(() => {
+            copyBtnText.textContent = 'Copy Notes';
+          }, 2000);
+        });
+      });
+
+      // Offline Speech Synthesis (Read Aloud)
+      let isSpeaking = false;
+      speakJournalBtn.addEventListener('click', () => {
+        if (!('speechSynthesis' in window)) {
+          showToast('Text-to-speech not supported by your browser', true);
+          return;
+        }
+
+        if (isSpeaking) {
+          window.speechSynthesis.cancel();
+          isSpeaking = false;
+          speakBtnText.textContent = 'Listen';
+          return;
+        }
+
+        const textToRead = journalText.textContent;
+        if (!textToRead) return;
+
+        const utterance = new SpeechSynthesisUtterance(textToRead);
+        utterance.rate = 0.95;
+        utterance.pitch = 1.0;
+
+        utterance.onend = () => {
+          isSpeaking = false;
+          speakBtnText.textContent = 'Listen';
+        };
+
+        utterance.onerror = () => {
+          isSpeaking = false;
+          speakBtnText.textContent = 'Listen';
+        };
+
+        window.speechSynthesis.speak(utterance);
+        isSpeaking = true;
+        speakBtnText.textContent = 'Stop Reading';
+        showToast('Reading field notes aloud...');
+      });
+
+      // Journal Font Size Adjustments
+      fontIncBtn.addEventListener('click', () => {
+        if (currentJournalFontSize < 1.45) {
+          currentJournalFontSize += 0.08;
+          journalText.style.fontSize = `${currentJournalFontSize}rem`;
+        }
+      });
+
+      fontDecBtn.addEventListener('click', () => {
+        if (currentJournalFontSize > 0.95) {
+          currentJournalFontSize -= 0.08;
+          journalText.style.fontSize = `${currentJournalFontSize}rem`;
+        }
+      });
+
+      // -----------------------------------------------------------
+      // LIFE LIST
+      // -----------------------------------------------------------
+      async function loadLifeList() {
+        try {
+          const res = await fetch('/api/lifelist');
+          if (!res.ok) throw new Error('Could not fetch life list');
+          lifeListEntries = await res.json();
+          renderLifeList();
+        } catch (e) {
+          showAlert(e.message);
+        }
+      }
+
+      function renderLifeList(filter = '') {
+        stampGrid.innerHTML = '';
+        const search = filter.toLowerCase().trim();
+        const filtered = lifeListEntries.filter(item => {
+          return item.common_name.toLowerCase().includes(search) ||
+            item.scientific_name.toLowerCase().includes(search) ||
+            (item.place && item.place.toLowerCase().includes(search));
+        });
+
+        lifelistTotal.textContent = `My Life List (${lifeListEntries.length})`;
+
+        if (filtered.length === 0) {
+          lifelistEmpty.style.display = 'flex';
+          stampGrid.style.display = 'none';
+        } else {
+          lifelistEmpty.style.display = 'none';
+          stampGrid.style.display = 'grid';
+
+          filtered.forEach(item => {
+            const firstSeenDate = item.first_seen ? new Date(item.first_seen).toLocaleDateString() : '—';
+            const stamp = document.createElement('div');
+            stamp.className = 'stamp-card';
+            stamp.innerHTML = `
+              <div class="stamp-seal">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                </svg>
+              </div>
+              <div class="stamp-common">${escapeHtml(item.common_name)}</div>
+              <div class="stamp-scientific">${escapeHtml(item.scientific_name)}</div>
+              <div class="stamp-meta">
+                <span>First observed: <strong>${firstSeenDate}</strong></span>
+                <span>Location: ${escapeHtml(item.place || 'Unknown')}</span>
+              </div>
+            `;
+            stampGrid.appendChild(stamp);
+          });
+        }
+      }
+
+      lifelistSearch.addEventListener('input', (e) => {
+        renderLifeList(e.target.value);
+      });
+
+      // -----------------------------------------------------------
+      // WEEKLY GOAL
+      // -----------------------------------------------------------
+      async function loadWeeklyGoal() {
+        try {
+          const res = await fetch('/api/weekly?goal=5');
+          if (!res.ok) throw new Error('Could not fetch weekly progress');
+          const data = await res.json();
+          const count = data.count || 0;
+          const goal = data.goal || 5;
+
+          goalCountText.textContent = count;
+          goalTargetText.textContent = `of ${goal} new species`;
+
+          const radius = 76;
+          const circumference = 2 * Math.PI * radius; // ~477.5
+          const ratio = Math.min(1.0, count / goal);
+          const offset = circumference - (ratio * circumference);
+          goalRing.style.strokeDashoffset = offset;
+
+          if (count >= goal) {
+            goalCard.classList.add('goal-achieved');
+            celebrationBanner.style.display = 'flex';
+            goalHeadline.textContent = 'Weekly Goal Achieved!';
+            goalHeadline.style.color = 'var(--sunrise)';
+          } else {
+            goalCard.classList.remove('goal-achieved');
+            celebrationBanner.style.display = 'none';
+            goalHeadline.textContent = `${goal - count} more to reach your goal`;
+            goalHeadline.style.color = 'var(--forest-dark)';
+          }
+        } catch (e) {
+          showAlert(e.message);
+        }
+      }
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      // Initialize
+      loadModels();
+    })();
+  </script>
+</body>
+</html>
